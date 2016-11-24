@@ -1,0 +1,18 @@
+.content-page{
+
+}
+.content-page form#search-match{
+	float:left;
+}
+.content-page .list-matches{}
+.content-page .list-matches .part{}
+.content-page .list-matches .part .part-image{
+	display: inline-block;
+}
+.content-page .list-matches .part .part-detail{
+	
+	padding-left: 10px; 
+}
+.clr{
+	clear: both;
+}

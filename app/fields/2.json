@@ -1,0 +1,16 @@
+{
+		"field_id": "2",
+		"field_name": "MU",
+		"city": {
+			"city_name": "Đà Nẵng",
+			"city_id": "2"
+		},
+		"district": {
+			"district_id": "1",
+			"district_name": "LienChieu "
+		},
+		"phone_number": "01698624222",
+		"latitude": "44555555",
+		"longtude": "44555555",
+		"address": "56NguyenChanh"
+}

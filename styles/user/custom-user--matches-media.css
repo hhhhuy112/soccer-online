@@ -1,0 +1,32 @@
+@media ( max-width: 1200px){
+		
+}
+@media ( max-width: 1024px){
+	
+}
+@media ( max-width: 992px){
+	
+	
+}
+@media (max-width: 768px){
+	.content-page .list-matches .part{
+		text-align: center;
+	}
+
+}
+@media (max-width: 620px){
+	
+}
+@media (max-width: 480px){
+
+}
+@media (max-width: 384px){
+.content-page .list-matches .part .part-image {
+    float: none;
+}
+
+.content-page .list-matches .part .part-detail{
+	float:none;
+	padding-left: 0px; 
+}
+}

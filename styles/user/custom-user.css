@@ -1,0 +1,99 @@
+body{
+	margin: 0px;
+	padding-top: 0px;
+	font-family: 'PT Sans', sans-serif;
+	background: #F7F7F7;	
+}
+/*headerContainer*/
+.headerContainer{
+	width: 100%;
+	background: #273140;
+}
+.headerContainer .container{}
+.headerContainer .headerInner{
+	background: #273140;
+	margin: 0px;
+	border: 0px;
+}
+.headerContainer .navbar-inverse{
+
+}
+.headerContainer .headerInner .navbar-header{}
+.navbar-header .navbar-toggle{
+	border: 1px solid white;
+}
+.navbar-header .navbar-toggle span{}
+.navbar-header .navbar-brand{
+	display: inline-block;
+	height: 32px;
+	width: 196px;
+	line-height: 32px;
+	margin: 0px;
+	padding: 0px;
+	margin-top:24px;
+	margin-bottom:26px;
+	font-size: 20px;
+}
+.navbar-header a{
+	text-align: center;
+}
+#navbar-collapse-9{
+	float:right;
+	margin: 0px auto;
+	text-align:center; 
+}
+
+.navbar-inverse .navbar-nav>li{}
+.navbar-inverse .navbar-nav>li>a{
+	font-weight: bold;
+	font-size: 14px;
+	padding:35px 16px 34px;
+	line-height: 14px;
+	text-transform: uppercase;
+}
+/*end headerContainer*/
+/*contentContainer*/
+.contentContainer{
+	background: #F7F7F7;	
+}
+.contentContainer .content {
+	margin: 0px auto;
+	text-align:center;
+	padding-top: 65px; 
+	padding-bottom: 57px; 
+	
+}
+.contentContainer .content h2{
+	font-size: 50px;
+}
+.contentContainer .content h2>span{
+	color: #C32966;
+}
+.contentContainer .content >span{
+	font-size:30px;
+}
+.contentContainer .content p{
+	font-size: 18px;
+	color: #666666;
+}
+.table_content{
+	background: white;
+	padding: 10px 10px;
+}
+#datatable_length label{
+	float:left;
+}
+.x_title{
+	margin-bottom:10px; 
+}
+.x_title a{
+	float:left;
+}
+.logoMain{
+	float:left;
+	line-height: 83px;
+	padding-top: 5px;
+	padding-right: 5px;
+}
+
+/*end contentContainer*/

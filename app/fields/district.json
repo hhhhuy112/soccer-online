@@ -1,0 +1,18 @@
+[
+	{
+		"district_id": "1",
+		"district_name": "Liển Chiểu",
+		"city": {
+			"city_name": "Đà Nẵng",
+			"city_id": "2"
+		}
+	},
+	{
+		"district_id": "2",
+		"district_name": "Duy Xuyên",
+		"city": {
+			"city_name": "Quảng Nam",
+			"city_id": "1"
+		}
+	}
+]

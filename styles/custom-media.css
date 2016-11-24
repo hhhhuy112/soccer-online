@@ -1,0 +1,34 @@
+@media screen and (max-width: 1200px) {
+			
+}
+@media screen and (max-width: 992px) {
+		
+
+}
+@media screen and (max-width: 940px) {
+	.btn-xs{
+		margin-top: 10px;
+	}	
+
+}
+@media screen and (max-width: 768px) {
+	.page-title{
+		margin-bottom: 10px;
+	}
+	.sidebar-menu{
+		padding-bottom: 30px;
+	}		
+}
+@media screen and (max-width: 627px) {
+	.navbar-header h2{
+		font-size: 25px;
+		
+	}	
+}
+@media screen and (max-width: 498px) {
+	.navbar-header h2 span{
+		display: none;
+	}
+}
+
+
