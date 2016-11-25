@@ -2,20 +2,12 @@ angular.
   module('fieldDetail').
   component('fieldDetail', {
     templateUrl: 'field-detail/field-detail.template.html',
-    controller: ['$http', '$routeParams',
-      function FieldDetailController($http, $routeParams) {
+    controller: ['$http', '$routeParams','$scope',
+      function FieldDetailController($http, $routeParams,$scope) {
         var self = this;
-
         $http.get('fields/' + $routeParams.fieldId + '.json').then(function(response) {
-          self.field = response.data;
-          self.field_id=self.field.field_id
-          self.field_name=self.field.field_name
-          self.address=self.field.address
-          self.city_id=self.field.city.city_id
-          self.district_id=self.field.district.district_id
-          self.latitude=self.field.latitude
-          self.longtude=self.field.longtude
-          self.phone_number=self.field.phone_number
+          $scope.field = response.data;
+
         });
          $http.get('fields/city.json').then(function(response) {
           self.cities = response.data;
@@ -23,8 +15,26 @@ angular.
           $http.get('fields/district.json').then(function(response) {
           self.districts = response.data;
         });
+            $scope.updateField = function (){
+                  $http({
+                         method: 'POST',
+                         url: 'http://example.com',
+                         headers: {
+                           'Content-Type': undefined
+                         },
+                         data: $.param($scope.field),
+                  }).then(function successCallback(response) {
+                        // this callback will be called asynchronously
+                        // when the response is available
+                  }, function errorCallback(response) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                   });  
+            };
+     
       }
     ]
+
   });
 
   

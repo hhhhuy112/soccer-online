@@ -5,3 +5,9 @@ var soccerApp=angular.module('soccerApp', [
   'fieldList',
   'fieldDetail',
 ]);
+soccerApp.controller("checkAlertController", function($scope) {
+   $scope.ckShowAlertFail = true;
+   $scope.ckShowAlertSuccess = false ;
+      
+   
+});

@@ -1,3 +1,3 @@
-angular.module('fieldDetail', [
+var fieldDetail =angular.module('fieldDetail', [
   'ngRoute'
 ]);

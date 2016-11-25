@@ -22,236 +22,177 @@
 				</tr>
 			</thead>
 			<tbody >
-				<tr  ng-repeat="field in $ctrl.fields ">
+				<tr  ng-repeat="field in fields ">
 					<td>{{field.field_id }}</td>
 					<td>{{field.field_name}}</td>
 					<td>{{field.address}}</td>
 					<td>{{field.phone_number}}</td>
 					<td>
-						<a  class="btn btn-primary btn-xs" data-toggle="modal" data-target=".update-field-modal">Xem</a>
-						<a class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+						<a   ng-click="viewField(field.field_id)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".update-field-modal">Xem</a>
+						<a   ng-click="comfirmDelete(field.field_id)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<!-- Modal -->
-		<!-- Modal -->
-		<div class="modal fade bs-example-modal-sm delete-disease-modal" tabindex="-1"
-										role="dialog" aria-hidden="true">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content" >
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel2">Thông báo</h4>
-					</div>
-					<div class="modal-body">
-						<h4>Bạn có chắc muốn xóa thông tin này?</h4>
-						<input type="text" hidden="true" name="fieldId">
-					</div>
-					<div class="modal-header" style="overflow: auto">
-						<div style="float: right">
-							<button type="button" class="btn btn-sm btn-danger btn-delete-disease">Xóa</button>
-							<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-		<div class="modal fade add-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-						<h4 class="modal-title">Add Field</h4>
-					 </div>
-					 <div class="modal-body">
-						<div class="x_content">
-							<form id="form-add-user" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Field Name:
-										<span class="required">*</span>
-									</label>
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="fieldName"  type="text">
-									</div>
-								</div>
-																						
-								<div class="item form-group">
-					                      	<label class="control-label col-md-3 col-sm-3 col-xs-12">City</label>
-						                      	<div class="col-md-6 col-sm-6 col-xs-12">
-							                        	<select class="form-control" name="city">
-						                          		<option value="1">Liên Chiểu</option>
-							                          	<option value="2">Thanh Khê</option>
-							  		                   	<option value="3">Sơn Trà</option>
-										       </select>
-								         	</div>
-					                	</div>
-								<div class="item form-group">
-					                      	<label class="control-label col-md-3 col-sm-3 col-xs-12">District</label>
-						                      	<div class="col-md-6 col-sm-6 col-xs-12">
-							                        	<select class="form-control" name="district">
-						                          		<option value="1">Liên Chiểu</option>
-							                          	<option value="2">Thanh Khê</option>
-							  		                   	<option value="3">Sơn Trà</option>
-										       </select>
-								         	</div>
-					                	</div>
-								
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">Phone number:
-										<span class="required">*</span>
-									</label>
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="phoneNumber"  type="text">
-									</div>
-								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address 
-										<span class="required">*</span>
-									</label>
-									<div class="col-md-6 col-sm-6 col-xs-12"	>
-										<textarea name="address" class="form-control col-md-7 col-xs-12"></textarea>
-									</div>
-								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="latitude">Latitude:
-										<span class="required">*</span>
-									</label>
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="latitude"  type="text">
-									</div>
-								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="longtude">Longtude:
-										<span class="required">*</span>
-									</label>
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="longtude"  type="text">
-									</div>
-								</div>
-								
-								<div class="ln_solid"></div>
-								<div class="form-group">
-									<div class="col-md-6 col-md-offset-3">
-										<button id="addUser" type="submit" class="btn btn-success">Thêm</button>
-										<a class="btn btn-default btn-cancel">Hủy</a>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				<div class="clearfix"></div>
-		       </div>				
-         </div>
-	</div>
-	<div class="modal fade update-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm delete-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" >
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title">Thông tin sân</h4>
+				<h4 class="modal-title" id="myModalLabel2">Thông báo</h4>
 			</div>
 			<div class="modal-body">
-				<div class="x_content">
-					<form id="form-update-fields" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
-						<div class="item form-group">
-							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Field Name:
-										
-								<span class="required">*</span>
-							</label>
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="fieldName"  type="text">
-								</div>
-							</div>
+				<h4>Bạn có chắc muốn xóa thông tin này?</h4>
+				<input type="text" hidden="true" name="fieldId" >
+				</div>
+				<div class="modal-header" style="overflow: auto">
+					<div style="float: right">
+						<button type="button" class="btn btn-sm btn-danger btn-delete-disease" ng-click="deleteField()">Delete</button>
+						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade add-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title">Add Field</h4>
+				</div>
+				<div class="modal-body">
+					<div class="x_content">
+						<form id="form-add-user" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">City</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Field 
+										<span class="required">*</span>
+								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control" name="city">
-										<option value="1">Liên Chiểu</option>
-										<option value="2">Thanh Khê</option>
-										<option value="3">Sơn Trà</option>
-									</select>
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text">
 								</div>
 							</div>
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">District</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control" name="district">
-										<option value="1">Liên Chiểu</option>
-										<option value="2">Thanh Khê</option>
-										<option value="3">Sơn Trà</option>
-									</select>
+									<select class="form-control" id="district" ng-model="field.district.district_id">
+  										<option ng-repeat="district in $ctrl.districts | filter:  city_id" value="{{district.district_id}}">{{district.district_name}}</option>
+  									</select>
 								</div>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="phoneNumber">Phone number:
-										
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Address 
+									<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12"	>
+									<textarea name="address" class="form-control col-md-7 col-xs-12" ng-model="fieldCreate.address"></textarea>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+																	for="latitude">Latitude
 									<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="phoneNumber"  type="text">
-									</div>
-								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address 
-										
-										<span class="required">*</span>
-									</label>
-									<div class="col-md-6 col-sm-6 col-xs-12"	>
-										<textarea name="address" class="form-control col-md-7 col-xs-12"></textarea>
-									</div>
-								</div>
-								<div class="item form-group">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="latitude">Latitude:
-										
-										<span class="required">*</span>
-									</label>
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="latitude"  type="text">
-										</div>
-									</div>
-									<div class="item form-group">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="longtude">Longtude:
-										
-											<span class="required">*</span>
-										</label>
-										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6"
-											name="longtude"  type="text">
-											</div>
-										</div>
-										<div class="ln_solid"></div>
-										<div class="form-group">
-											<div class="col-md-6 col-md-offset-3">
-												<button id="updateFields" type="submit" class="btn btn-success">Cập nhật</button>
-												<a class="btn btn-default btn-cancel">Hủy</a>
-											</div>
-										</div>
-									</form>
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="fieldCreate.latitude">
 								</div>
 							</div>
-							<div class="clearfix"></div>
-						</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+																	for="longtude">Longtude
+									<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="fieldCreate.longtude">
+								</div>
+							</div>
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-3">
+									<button id="addUser" type="submit" class="btn btn-success">Add</button>
+									<a class="btn btn-default btn-cancel">Hủy</a>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
-				<!-- end Modal -->			
-						        				
+				<div class="clearfix"></div>
+			</div>
 		</div>
-		<!-- end x_content-->			
-	</div>							
-	<!-- end x_page-->
+	</div>
+	<div class="modal fade update-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title">Field Infomation</h4>
+				</div>
+				<div class="modal-body">
+					<div class="x_content">
+						<form id="form-update-fields" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+																	for="fieldName">Field Name
+									<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="field.field_name">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">District</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="form-control" id="district" ng-model="field.district.district_id">
+  										<option ng-repeat="district in $ctrl.districts | filter:  city_id" value="{{district.district_id}}">{{district.district_name}}</option>
+  									</select>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Address 
+									<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12"	>
+									<textarea name="address" class="form-control col-md-7 col-xs-12" ng-model="field.address"></textarea>
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+																	for="latitude">Latitude
+									<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="field.latitude">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+																	for="longtude">Longtude
+									<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="field.longtude">
+								</div>
+							</div>
+									<div class="ln_solid"></div>
+									<div class="form-group">
+										<div class="col-md-6 col-md-offset-3">
+											<button id="updateFields" ng-click="updateField()" class="btn btn-success">Update</button>
+											<a class="btn btn-default btn-cancel">Hủy</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+			<!-- end Modal -->				
+					
