@@ -11,6 +11,9 @@ angular.
          when('/fields/:fieldId', {
           template: '<field-detail></field-detail>'
         }).
+         when('/cities', {
+          template: '<city-list></city-list>'
+        }).
         otherwise('/fields');
     }
   ]);

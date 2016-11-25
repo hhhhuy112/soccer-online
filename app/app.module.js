@@ -3,7 +3,8 @@ var soccerApp=angular.module('soccerApp', [
   // ...which depends on the `phoneList` module
   'ngRoute',
   'fieldList',
-  'fieldDetail',
+  'cityList',
+
 ]);
 soccerApp.controller("checkAlertController", function($scope) {
    $scope.ckShowAlertFail = true;

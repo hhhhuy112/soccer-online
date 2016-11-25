@@ -1,0 +1,102 @@
+<div class="col-sm-12 col-md-12 col-lg-12 page-title" style="margin-bottom: 50px">
+	<h3>Manage City</h3>
+</div>
+<!-- end page-title-->
+<div class="x_panel col-sm-12 col-md-12 col-lg-12">
+	<div class="x_title">
+		<a class="btn btn-success btn-sm"  ng-click="toggle('add',0)" data-toggle="modal" data-target=".add-city-modal">
+			<i class="fa fa-plus"></i>Add city
+		</a>
+		<div class="clearfix"></div>
+	</div>
+	<!-- end x_title-->
+	<div class="x_content ">
+		<table id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>#Id</th>
+					<th>City code</th>
+					<th>City name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody >
+				<tr  ng-repeat="objectShow in objects ">
+					<td>{{objectShow.id }}</td>
+					<td>{{objectShow.cityCode}}</td>
+					<td>{{objectShow.cityName}}</td>
+					<td>
+						<a    ng-click="toggle('edit', objectShow.id)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
+						<a   ng-click="comfirmDelete(objectShow.id)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm delete-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" >
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel2">Thông báo</h4>
+			</div>
+			<div class="modal-body">
+				<h4>Bạn có chắc muốn xóa thông tin này?</h4>
+				<input type="text" hidden="true" name="fieldId" >
+				</div>
+				<div class="modal-header" style="overflow: auto">
+					<div style="float: right">
+						<button type="button" class="btn btn-sm btn-danger btn-delete-disease" ng-click="deleteField()">Delete</button>
+						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="myModal" class="modal fade add-city-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title">{{form_title}}</h4>
+				</div>
+				<div class="modal-body">
+					<div class="x_content">
+						<form id="form-add-user" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">City Code 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.cityCode">
+									<input  name="cityId" hidden="true"  type="text" ng-model="object.id">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">City Name 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.cityName">
+								</div>
+							</div>
+							<div class="ln_solid"></div>
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-3">
+									<button id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Add</button>
+									<a ng-click="btnCancel()" class="btn btn-default btn-cancel">Hủy</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+			
+					
