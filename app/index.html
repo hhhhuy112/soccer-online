@@ -34,7 +34,7 @@
     		<script src="city-list/city-list.component.js"></script>
 		<script src="user-list/user-list.module.js"></script>
     		<script src="user-list/user-list.component.js"></script>
-		  
+		
 
 
 	</head>
@@ -130,13 +130,8 @@
 					</div>	
 					<!-- end mySidenav -->
 					<div id="main" class="col-sm-9 col-md-9">
-						<div class="row main_content" >
-							<div class="alert alert-success col-sm-9  col-md-9 col-sm-offset-1 col-md-offset-1" style="display: none;"   ng-show="ckShowAlertSuccess">
-	    							<strong>Success!</strong> 
-	  						</div>
-	  						<div class="alert alert-danger" style="display: none;" ng-show="ckShowAlertFail">
-    								<strong>Fail!</strong> 
-  							</div>
+						<div class="row main_content" ng-conntroller="checkAlertController">
+							
 							<div ng-view class="view-frame"></div>
 						</div>
 						<!-- end main_content -->		
@@ -167,7 +162,7 @@
         <script src="assets/js/datatables/dataTables.scroller.min.js"></script>
         <!-- pace -->
         <script type="text/javascript">
-       
+       	
         	$('#datatable').DataTable({
         		responsive: true,
 	});

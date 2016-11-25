@@ -38,7 +38,9 @@ angular.
       }
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
+             alert($scope.object.cityCode+" "+ $scope.object.cityName);
             var url = API_URL + "/cities";
+            alert(url);
             if (modalstate === 'edit') {
                   url += "/" + id;
             }
@@ -47,7 +49,7 @@ angular.
                     method: "POST",
                     data: { 
                       "cityCode" :  $scope.object.cityCode, 
-                      "cityName" : $scope.object.Name,
+                      "cityName" : $scope.object.cityName,
                    },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {

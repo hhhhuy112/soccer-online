@@ -200,7 +200,9 @@ body{
 /*end content*/
 
 
-
+.help-inline{
+	color: red;
+}
 
 
 .clr{

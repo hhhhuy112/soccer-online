@@ -11,9 +11,16 @@ angular.
       $http.get(API_URL+"/users").then(function(response) {
             $scope.objects = response.data;
       });
-      
+       $http.get(API_URL+"/districts").then(function(response) {
+             $scope.districts = response.data;
+      });
+        $scope.isAdmin=true; 
+       $scope.valueDistrict="1";
+       $scope.showAlertSuccess=false;
+      $scope.showAlertFail=false;
        $scope.toggle = function(modalstate, id) {
             $scope.modalstate = modalstate;
+
             switch (modalstate) {
                     case 'add':
                           $scope.form_title = "Add User";
@@ -26,7 +33,7 @@ angular.
                                 status:"",
                                 districtId:"",
                                 districtName:"",
-                                userType:"",
+                                userType:0,
                                 lastLogin:"",
                                 verificationCode:"",
                                 verified:""
@@ -35,12 +42,18 @@ angular.
                     case 'edit':
                           $scope.form_title = "User Infomation";
                           $scope.id = id;
+                          $http.get(API_URL+"/districts").then(function(response) {
+                            $scope.districts = response.data;
+                          });
                           $http.get(API_URL+ '/users/' + id)
                           .success(function(response) {
                                 $scope.object = response;
-                          });
-                           $http.get(API_URL+"/districts").then(function(response) {
-                                $scope.districts = response.data;
+                                $scope.valueDistrict=$scope.object.districtId.toString();
+                                if($scope.object.userType==1){
+                                      $scope.isAdmin=true;          
+                                }else{
+                                      $scope.isAdmin=false; 
+                                } 
                           });
                           break;
                     default:
@@ -48,45 +61,77 @@ angular.
             }
            
       }
+      $scope.changeValueDistrict=function(){
+            ;
+
+      };
+        $scope.setAdmin= function() {
+            if($scope.isAdmin){
+                $scope.object.userType="1";
+            }else{
+                $scope.object.userType="0";
+            } 
+      };
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
             var url = API_URL + "/users";
+            var method="POST";
             if (modalstate === 'edit') {
-                  url += "/" + id;
+                  method="PUT";
             }
              $http({
                    url: url,
-                    method: "POST",
-                    data: { 
-                      "cityCode" : "asdasd2020", 
-                      "cityName" : "asdasd"
-                   },
+                    method: method,
+                    data: {
+                          "userId":$scope.object.userId,
+                          "username":$scope.object.username,
+                          "password":$scope.object.password,
+                          "email":$scope.object.email,
+                          "phoneNumber":$scope.object.phoneNumber,
+                          "status":1,
+                          "districtId":$scope.valueDistrict,
+                          "userType":$scope.object.userType,
+                          "lastLogin":"21/09/2016 20:00:00",
+                          "verificationCode":"123652","verified":true
+                    },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                   console.log(response);
-                   location.reload();
+                    $scope.result(response);   
              }).error(function(response) {
                    alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
                     console.log(response);
              });
 
       }
-
    
-
-   
-
-     
+      $scope.resetData=function(id){
+          $http.get(API_URL+"/users").then(function(response) {
+              $scope.objects = response.data;
+          });
+      }
       $scope.comfirmDelete=function(id){
           $scope.idDelete=id;
       }
-      $scope.deleteCity=function(){
-            $http.get('fields/' + $scope.idDelete + '.json').then(function(response) {
+      $scope.deleteObject=function(id){
+            $http.delete(API_URL + "/users/"+id).then(function(response) {
+                  $scope.result(response);   
                   
             });
       };
 
-
+      $scope.result=function(result){
+              if(result["status"]=="success"){
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
+                  
+              }else{
+                   $scope.showAlertSuccess=false;
+                   $scope.showAlertFail=true;
+              }
+            $scope.resetData(); 
+            $scope.btnCancel();   
+            
+      };
       $scope.btnCancel=function(){
           $('#myModal').modal('hide');         
       }

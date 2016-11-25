@@ -8,8 +8,6 @@ var soccerApp=angular.module('soccerApp', [
 
 ]);
 soccerApp.controller("checkAlertController", function($scope) {
-   $scope.ckShowAlertFail = true;
-   $scope.ckShowAlertSuccess = false ;
-      
-   
+   $scope.ckShowAlertSuccess =true;
+   $scope.ckShowAlertFail = true ;
 });
