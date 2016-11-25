@@ -1,14 +1,14 @@
 // Register `phoneList` component, along with its associated controller and template
 angular.
-  module('cityList').
-  component('cityList', {
-    templateUrl: 'city-list/city-list.template.html',
+  module('userList').
+  component('userList', {
+    templateUrl: 'user-list/user-list.template.html',
         
     controller: ['$http','$routeParams','$scope',
-      function CityListController($http,$routeParams,$scope) {
+      function UserListController($http,$routeParams,$scope) {
       var self = this;
        var API_URL="http://soccernetworkapi-humiki.rhcloud.com"
-      $http.get(API_URL+"/cities").then(function(response) {
+      $http.get(API_URL+"/users").then(function(response) {
             $scope.objects = response.data;
       });
       
@@ -16,19 +16,31 @@ angular.
             $scope.modalstate = modalstate;
             switch (modalstate) {
                     case 'add':
-                          $scope.form_title = "Add City";
+                          $scope.form_title = "Add User";
                           $scope.object={
-                                id : "",
-                                cityCode : "",
-                                cityName : "",
+                                userId : "",
+                                username: "",
+                                password : "",
+                                email:"",
+                                phoneNumber: "",
+                                status:"",
+                                districtId:"",
+                                districtName:"",
+                                userType:"",
+                                lastLogin:"",
+                                verificationCode:"",
+                                verified:""
                           }
                           break;
                     case 'edit':
-                          $scope.form_title = "City Infomation";
+                          $scope.form_title = "User Infomation";
                           $scope.id = id;
-                          $http.get(API_URL+ '/cities/' + id)
+                          $http.get(API_URL+ '/users/' + id)
                           .success(function(response) {
                                 $scope.object = response;
+                          });
+                           $http.get(API_URL+"/districts").then(function(response) {
+                                $scope.districts = response.data;
                           });
                           break;
                     default:
@@ -38,7 +50,7 @@ angular.
       }
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
-            var url = API_URL + "/cities";
+            var url = API_URL + "/users";
             if (modalstate === 'edit') {
                   url += "/" + id;
             }
@@ -46,8 +58,8 @@ angular.
                    url: url,
                     method: "POST",
                     data: { 
-                      "cityCode" :  $scope.object.cityCode, 
-                      "cityName" : $scope.object.Name,
+                      "cityCode" : "asdasd2020", 
+                      "cityName" : "asdasd"
                    },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {

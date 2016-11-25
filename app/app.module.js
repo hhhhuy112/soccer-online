@@ -4,6 +4,7 @@ var soccerApp=angular.module('soccerApp', [
   'ngRoute',
   'fieldList',
   'cityList',
+  'userList',
 
 ]);
 soccerApp.controller("checkAlertController", function($scope) {

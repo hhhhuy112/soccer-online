@@ -1,5 +1,5 @@
 <div class="col-sm-12 col-md-12 col-lg-12 page-title" style="margin-bottom: 50px">
-	<h3>Manage City</h3>
+	<h3>Manage User</h3>
 </div>
 <!-- end page-title-->
 <div class="x_panel col-sm-12 col-md-12 col-lg-12">
@@ -15,19 +15,26 @@
 			<thead>
 				<tr>
 					<th>#Id</th>
-					<th>City code</th>
-					<th>City name</th>
+					<th>Username</th>
+					<th>Email</th>
+					<th>Phone Number</th>
+					<th>District Name</th>
+					<th>User type</th>
 					<th></th>
+
 				</tr>
 			</thead>
 			<tbody >
 				<tr  ng-repeat="objectShow in objects ">
-					<td>{{objectShow.id }}</td>
-					<td>{{objectShow.cityCode}}</td>
-					<td>{{objectShow.cityName}}</td>
+					<td>{{objectShow.userId }}</td>
+					<td>{{objectShow.username}}</td>
+					<td>{{objectShow.email}}</td>
+					<td>{{objectShow.phoneNumber}}</td>
+					<td>{{objectShow.districtName}}</td>
+					<td>{{objectShow.userType}}</td>
 					<td>
-						<a    ng-click="toggle('edit', objectShow.id)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
-						<a   ng-click="comfirmDelete(objectShow.id)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+						<a    ng-click="toggle('edit', objectShow.userId)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
+						<a   ng-click="comfirmDelete(objectShow.userId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
 					</td>
 				</tr>
 			</tbody>
@@ -68,26 +75,53 @@
 					<div class="x_content">
 						<form id="form-add-user" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">City Code 
-										<span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">User Name 
+									<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.cityCode">
-									<input  name="cityId" hidden="true"  type="text" ng-model="object.id">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.username">
+									<input  name="cityId" hidden="true"  type="text" ng-model="object.userId">
 								</div>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">City Name 
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Password 
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.cityName">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.password">
 								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Email 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.email">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Phone number 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="cityCode"  type="text" ng-model="object.phoneNumber">
+								</div>
+							</div>
+							<div class="item form-group">
+					  			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">District 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="form-control col-md-7 col-xs-12" id="district" ng-model="object.districtId">
+					  				<option ng-repeat="district in districts " value="{{district.district_id}}">{{district.districtName}}</option>
+					  			</select>
+								</div>
+					  			
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-3">
-									<button id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Submit</button>
+									<button id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Add</button>
 									<a ng-click="btnCancel()" class="btn btn-default btn-cancel">Hủy</a>
 								</div>
 							</div>
@@ -99,4 +133,3 @@
 		</div>
 	</div>
 			
-					
