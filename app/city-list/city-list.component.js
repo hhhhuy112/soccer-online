@@ -11,7 +11,8 @@ angular.
       $http.get(API_URL+"/cities").then(function(response) {
             $scope.objects = response.data;
       });
-      
+      $scope.showAlertSuccess=false;
+      $scope.showAlertFail=false;
        $scope.toggle = function(modalstate, id) {
             $scope.modalstate = modalstate;
             switch (modalstate) {
@@ -38,47 +39,59 @@ angular.
       }
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
-             alert($scope.object.cityCode+" "+ $scope.object.cityName);
-            var url = API_URL + "/cities";
-            alert(url);
+             
+             var url = API_URL + "/cities";
+            var method="POST";
             if (modalstate === 'edit') {
-                  url += "/" + id;
+                  method="PUT";
             }
              $http({
                    url: url,
-                    method: "POST",
+                    method: method,
                     data: { 
+                      "id": id,
                       "cityCode" :  $scope.object.cityCode, 
-                      "cityName" : $scope.object.cityName,
+                      "cityName" : $scope.object.cityName
                    },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                   console.log(response);
-                   location.reload();
+                  $scope.result(response);   
              }).error(function(response) {
-                   alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
-                    console.log(response);
              });
 
       }
-
-   
-
-   
-
      
+      $scope.resetData=function(id){
+          $http.get(API_URL+"/cities").then(function(response) {
+              $scope.objects = response.data;
+          });
+      }
       $scope.comfirmDelete=function(id){
           $scope.idDelete=id;
       }
-      $scope.deleteCity=function(){
-            $http.get('fields/' + $scope.idDelete + '.json').then(function(response) {
-                  
+      $scope.deleteObject=function(id){
+             alert(id);
+            $http.delete(API_URL + "/cities/"+id).then(function(response) {
+                  $scope.result(response);   
             });
       };
 
-
+      $scope.result=function(rs){
+              alert(rs["status"]);
+              if(rs["status"]==="success"){
+                 $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
+                  
+              }else{
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
+              }
+            $scope.resetData(); 
+            $scope.btnCancel();   
+            
+      };
       $scope.btnCancel=function(){
-          $('#myModal').modal('hide');         
+          $('.modal').modal('hide');         
       }
     }
 

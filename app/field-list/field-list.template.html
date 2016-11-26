@@ -1,35 +1,44 @@
-<div class="col-sm-12 col-md-12 col-lg-12 page-title" style="margin-bottom: 50px">
-	<h3>Manage Fields</h3>
+<div style="margin-top:10px; " class="alert alert-success col-sm-9  col-md-9 col-sm-offset-1 col-md-offset-1"  ng-show="showAlertSuccess">
+	<strong>Success!</strong> 
 </div>
+<div style="margin-top:10px; " class="alert alert-danger col-sm-9  col-md-9 col-sm-offset-1 col-md-offset-1"  ng-show="showAlertFail">
+	<strong>Fail!</strong> 
+</div>
+<div class="col-sm-12 col-md-12 col-lg-12 page-title" style="margin-bottom: 50px">
+	<h3>Manage Field</h3>
+</div>
+
 <!-- end page-title-->
 <div class="x_panel col-sm-12 col-md-12 col-lg-12">
 	<div class="x_title">
-		<a class="btn btn-success btn-sm" href="" data-toggle="modal" data-target=".add-field-modal">
-			<i class="fa fa-plus"></i>Thêm mới
+		<a class="btn btn-success btn-sm"  ng-click="toggle('add',0)" data-toggle="modal" data-target=".add-city-modal">
+			<i class="fa fa-plus"></i>Add Field
 		</a>
 		<div class="clearfix"></div>
 	</div>
 	<!-- end x_title-->
 	<div class="x_content ">
-		<table id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
+		<table datatable="ng" id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
 			<thead>
 				<tr>
-					<th>#Id</th>
-					<th>Fields Name</th>
+					<th>Field Id</th>
+					<th>Field name</th>
+					<th>District</th>
 					<th>Address</th>
-					<th>Phone_number</th>
+					<th>Phone</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody >
-				<tr  ng-repeat="field in fields ">
-					<td>{{field.field_id }}</td>
-					<td>{{field.field_name}}</td>
-					<td>{{field.address}}</td>
-					<td>{{field.phone_number}}</td>
+				<tr  ng-repeat="objectShow in objects ">
+					<td>{{objectShow.fieldId }}</td>
+					<td>{{objectShow.fieldName}}</td>
+					<td>{{objectShow.districtName}}</td>
+					<td>{{objectShow.address}}</td>
+					<td>{{objectShow.phoneNumber}}</td>
 					<td>
-						<a   ng-click="viewField(field.field_id)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".update-field-modal">Xem</a>
-						<a   ng-click="comfirmDelete(field.field_id)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+						<a    ng-click="toggle('edit', objectShow.fieldId )" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
+						<a   ng-click="comfirmDelete(objectShow.fieldId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
 					</td>
 				</tr>
 			</tbody>
@@ -45,77 +54,81 @@
 				<h4 class="modal-title" id="myModalLabel2">Thông báo</h4>
 			</div>
 			<div class="modal-body">
-				<h4>Bạn có chắc muốn xóa thông tin này?</h4>
+				<h4>Are you sure delete this item?</h4>
 				<input type="text" hidden="true" name="fieldId" >
 				</div>
 				<div class="modal-header" style="overflow: auto">
 					<div style="float: right">
-						<button type="button" class="btn btn-sm btn-danger btn-delete-disease" ng-click="deleteField()">Delete</button>
-						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+						<button type="button" class="btn btn-sm btn-danger btn-delete-disease" ng-click="deleteObject(idDelete)">Delete</button>
+						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="modal fade add-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div id="myModal" class="modal fade add-city-modal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title">Add Field</h4>
+					<h4 class="modal-title">{{form_title}}</h4>
 				</div>
 				<div class="modal-body">
 					<div class="x_content">
-						<form id="form-add-user" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+						<form  id ="formAU" name="form_a_u"  class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Field 
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Field Name
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="fieldName"  type="text" ng-model="object.fieldName" ng-required="true">
+									<input  name="fieldId" hidden="true"  type="text" ng-model="object.fieldId">
 								</div>
+								<span class="help-inline"
+									ng-show="form_a_u.fieldName.$invalid && form_a_u.fieldName.$touched">FieldName field is invalid
+								</span>
+
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">District</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control" id="district" ng-model="field.district.district_id">
-  										<option ng-repeat="district in $ctrl.districts | filter:  city_id" value="{{district.district_id}}">{{district.district_name}}</option>
-  									</select>
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Address 
-									<span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12"	>
-									<textarea name="address" class="form-control col-md-7 col-xs-12" ng-model="fieldCreate.address"></textarea>
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12"
-																	for="latitude">Latitude
-									<span class="required">*</span>
+					  			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">District 
+										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="fieldCreate.latitude">
+									<select class="form-control col-md-7 col-xs-12" id="district"  ng-model="valueDistrict">
+					  					<option ng-repeat="district in districts" value="{{district.districtId}}">{{district.districtName}}</option>
+					  				</select>
 								</div>
 							</div>
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12"
-																	for="longtude">Longtude
-									<span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Address
+										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="fieldCreate.longtude">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="address"  type="text" ng-model="object.address" ng-required="true">
 								</div>
+								<span class="help-inline"
+									ng-show="form_a_u.address.$invalid && form_a_u.address.$touched">Address field is invalid
+								</span>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Phone
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="phone"  type="text" ng-model="object.phoneNumber" ng-required="true" ng-pattern="/^[0-9]{1,12}$/">
+								</div>
+								<span class="help-inline"
+									ng-show="form_a_u.phone.$invalid && form_a_u.phone.$touched">Phone number field is invalid
+								</span>
+								<span class="help-inline" ng-show="form_a_u.phoneNumber.$error.pattern">Not a valid number!</span>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-3">
-									<button id="addUser" type="submit" class="btn btn-success">Add</button>
-									<a class="btn btn-default btn-cancel">Hủy</a>
+									<button ng-disabled="form_a_u.$invalid" id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Submit</button>
+									<a ng-click="btnCancel()" class="btn btn-default btn-cancel">Hủy</a>
 								</div>
 							</div>
 						</form>
@@ -125,74 +138,4 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade update-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title">Field Infomation</h4>
-				</div>
-				<div class="modal-body">
-					<div class="x_content">
-						<form id="form-update-fields" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12"
-																	for="fieldName">Field Name
-									<span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="field.field_name">
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">District</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control" id="district" ng-model="field.district.district_id">
-  										<option ng-repeat="district in $ctrl.districts | filter:  city_id" value="{{district.district_id}}">{{district.district_name}}</option>
-  									</select>
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">Address 
-									<span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12"	>
-									<textarea name="address" class="form-control col-md-7 col-xs-12" ng-model="field.address"></textarea>
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12"
-																	for="latitude">Latitude
-									<span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="field.latitude">
-								</div>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12"
-																	for="longtude">Longtude
-									<span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="name"  type="text" ng-model="field.longtude">
-								</div>
-							</div>
-									<div class="ln_solid"></div>
-									<div class="form-group">
-										<div class="col-md-6 col-md-offset-3">
-											<button id="updateFields" ng-click="updateField()" class="btn btn-success">Update</button>
-											<a class="btn btn-default btn-cancel">Hủy</a>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-				</div>
-			</div>
-			<!-- end Modal -->				
-					
+			

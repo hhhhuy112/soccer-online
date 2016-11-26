@@ -18,7 +18,7 @@
 	</div>
 	<!-- end x_title-->
 	<div class="x_content ">
-		<table id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
+		<table datatable="ng" id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
 			<thead>
 				<tr>
 					<th>#Id</th>
@@ -54,16 +54,16 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel2">Thông báo</h4>
+				<h4 class="modal-title" id="myModalLabel2">Notification</h4>
 			</div>
 			<div class="modal-body">
-				<h4>Bạn có chắc muốn xóa thông tin này?</h4>
+				<h4>Are you sure delete this item?</h4>
 				<input type="text" hidden="true" name="fieldId" >
 				</div>
 				<div class="modal-header" style="overflow: auto">
 					<div style="float: right">
 						<button type="button" class="btn btn-sm btn-danger btn-delete-disease" ng-click="deleteObject(idDelete)">Delete</button>
-						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
 					</div>
 				</div>
 			</div>
@@ -80,17 +80,17 @@
 				</div>
 				<div class="modal-body">
 					<div class="x_content">
-						<form name="form_a_u" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+						<form id ="formAU" name="form_a_u" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
 							<div class="item form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">UserName 
 									<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="username"  type="text" ng-model="object.username" ng-minlength="6">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="un"  type="text" ng-model="object.username" ng-minlength="6">
 									<input  name="cityId" hidden="true"  type="text" ng-model="object.userId" ng-required="true">
 									<br />
 									<span class="help-inline"
-									ng-show="form_a_u.username.$invalid && form_a_u.username.$touched">Username field is invalid
+									ng-show="form_a_u.un.$invalid && form_a_u.un.$touched">Username field is invalid
 								</span>
 								<br />
 								<span class="help-inline" ng-show="form_a_u.username.$error.minlength ">Minlength=6 </span>
@@ -138,7 +138,7 @@
 								</span>
 								<br />
 								 <span class="help-inline" ng-show="form_a_u.phoneNumber.$error.pattern">Not a valid number!</span><br />
-								 <span class="help-inline" ng-show="form_a_u.phoneNumber.$error.maxlength ">Maxlength=12</span>
+								
 								</div>
 								
 							</div>

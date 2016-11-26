@@ -5,53 +5,119 @@ angular.
     templateUrl: 'field-list/field-list.template.html',
         
     controller: ['$http','$routeParams','$scope',
-      function FieldListController($http,$routeParams,$scope) {
-            var self = this;
-
-      $http.get('fields/fields.json').then(function(response) {
-            $scope.fields = response.data;
+      function UserListController($http,$routeParams,$scope) {
+      var self = this;
+       var API_URL="http://soccernetworkapi-humiki.rhcloud.com"
+      $http.get(API_URL+"/fields").then(function(response) {
+            $scope.objects = response.data;
       });
-      $scope.viewField=function(id){
-            $scope.id=id;
-            $http.get('fields/' + $scope.id + '.json').then(function(response) {
-                  $scope.field = response.data;
-            });
-            $http.get('fields/city.json').then(function(response) {
-                  self.cities = response.data;
-            });
-            $http.get('fields/district.json').then(function(response) {
-                  self.districts = response.data;
-            });
-      };
+      
+    
+      $scope.showAlertSuccess=false;
+      $scope.showAlertFail=false;
+       $scope.toggle = function(modalstate, id) {
+            $scope.modalstate = modalstate;
 
-      $scope.updateField = function (){
-            $http({
-                    method: 'POST',
-                    url: 'http://example.com',
-                    headers: {
-                           'Content-Type': undefined
-                    },
-                   data: $.param($scope.field),
-            }).then(function successCallback(response) {
-                        // this callback will be called asynchronously
-                        // when the response is available
-            }, function errorCallback(response) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-            });  
+            switch (modalstate) {
+                    case 'add':
+                          $scope.form_title = "Add Field";
+                          $scope.object={
+                                 fieldId : "",
+                                fieldName : "Ex: Nguyen Chanh",
+                                districtId : "",
+                                districtName : "",
+                                address : "Ex: 56 Nguyen Chanh",
+                                latitude : 120120,
+                                longtude : 102102,
+                                phoneNumber: "",
+                                districtName: "",
+                          }
+                        $http.get(API_URL+"/districts").then(function(response) {
+                             $scope.districts = response.data;
+                        });
+                          $scope.valueDistrict=$scope.districts[0].districtId.toString();  
+                          break;
+                    case 'edit':
+                          $scope.form_title = "Field Infomation";
+                          $scope.id = id;
+                          $http.get(API_URL+"/districts").then(function(response) {
+                            $scope.districts = response.data;
+                          });
+                          $http.get(API_URL+ '/fields/' + id)
+                          .success(function(response) {
+                                $scope.object = response;
+                                $scope.valueDistrict=$scope.object.districtId.toString();
+                          });
+                          break;
+                    default:
+                          break;
+            }
+           
+      }
+      $scope.changeValueDistrict=function(){
+          
+
       };
+      
+       //Lưu record mới / update record
+       $scope.saveRecord = function(modalstate, id) {
+            var url = API_URL + "/fields";
+            var method="POST";
+            if (modalstate === 'edit') {
+                  method="PUT";
+            }
+             $http({
+                   url: url,
+                    method: method,
+                    data: {
+                      "fieldId": id,
+                      "fieldName": $scope.object.fieldName,
+                      "districtId": $scope.valueDistrict,
+                      "address": $scope.object.address,
+                      "latitude": $scope.object.latitude,
+                      "longitude": $scope.object.longitude,
+                      "phoneNumber": $scope.object.phoneNumber
+                    },
+                    headers: {"Content-Type": "application/json"}
+             }).success(function(response) {
+                    $scope.result(response);   
+             }).error(function(response) {
+                   alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
+                    console.log(response);
+             });
+
+      }
+   
+      $scope.resetData=function(id){
+          $http.get(API_URL+"/fields").then(function(response) {
+              $scope.objects = response.data;
+          });
+      }
       $scope.comfirmDelete=function(id){
           $scope.idDelete=id;
       }
-      $scope.deleteField=function(){
-            $http.get('fields/' + $scope.idDelete + '.json').then(function(response) {
-                  $scope.field = response.data;
+      $scope.deleteObject=function(id){
+            $http.delete(API_URL + "/fields/"+id).then(function(response) {
+                  $scope.result(response);   
+                  
             });
       };
 
-
-      $scope.btnCancel=function(){
+      $scope.result=function(result){
+              if(result["status"]==="success"){
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
+                  
+              }else{
+                   $scope.showAlertSuccess=false;
+                   $scope.showAlertFail=true;
+              }
+            $scope.resetData(); 
+            $scope.btnCancel();   
             
+      };
+      $scope.btnCancel=function(){
+          $('.modal').modal('hide');         
       }
     }
 

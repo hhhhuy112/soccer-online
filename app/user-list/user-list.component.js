@@ -26,9 +26,9 @@ angular.
                           $scope.form_title = "Add User";
                           $scope.object={
                                 userId : "",
-                                username: "",
+                                username: "Ex: minhhuyho",
                                 password : "",
-                                email:"",
+                                email:"Ex: minhhuyho@gmail.com",
                                 phoneNumber: "",
                                 status:"",
                                 districtId:"",
@@ -120,20 +120,20 @@ angular.
       };
 
       $scope.result=function(result){
-              if(result["status"]=="success"){
+              if(result["status"]==="success"){
                    $scope.showAlertSuccess=true;
                    $scope.showAlertFail=false;
                   
               }else{
-                   $scope.showAlertSuccess=false;
-                   $scope.showAlertFail=true;
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
               }
             $scope.resetData(); 
             $scope.btnCancel();   
             
       };
       $scope.btnCancel=function(){
-          $('#myModal').modal('hide');         
+          $('.modal').modal('hide');         
       }
     }
 

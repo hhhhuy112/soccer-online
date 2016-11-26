@@ -14,6 +14,9 @@ angular.
           when('/users', {
           template: '<user-list></user-list>'
         }).
+           when('/matches', {
+          template: '<match-list></match-list>'
+        }).
         otherwise('/fields');
     }
   ]);

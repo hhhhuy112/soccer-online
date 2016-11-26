@@ -1,0 +1,196 @@
+ 
+ 
+<div style="margin-top:10px; " class="alert alert-success col-sm-9  col-md-9 col-sm-offset-1 col-md-offset-1"  ng-show="showAlertSuccess">
+	<strong>Success!</strong> 
+</div>
+<div style="margin-top:10px; " class="alert alert-danger col-sm-9  col-md-9 col-sm-offset-1 col-md-offset-1"  ng-show="showAlertFail">
+	<strong>Fail!</strong> 
+</div>
+<div class="col-sm-12 col-md-12 col-lg-12 page-title" style="margin-bottom: 50px">
+	<h3>Manage Match</h3>
+</div>
+
+<!-- end page-title-->
+<div class="x_panel col-sm-12 col-md-12 col-lg-12">
+	<div class="x_title">
+		<a class="btn btn-success btn-sm"  ng-click="toggle('add',0,0)" data-toggle="modal" data-target=".add-city-modal">
+			<i class="fa fa-plus"></i> Add Match
+		</a>
+		<div class="clearfix"></div>
+	</div>
+	<!-- end x_title-->
+	<div class="x_content ">
+		<table datatable="ng" id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Match ID</th>
+					<th>Field Name</th>
+					<th>Host</th>
+					<th>Maximum Players</th>
+					<th>Available Slots</th>
+					<th>Price</th>
+					<th>Start Time</th>
+					<th>End Time</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody >
+				<tr  ng-repeat="objectShow in objects ">
+					<td>{{objectShow.matchId }}</td>
+					<td>{{objectShow.fieldName }}</td>
+					<td>{{objectShow.hostName }}</td>
+					<td>{{objectShow.maxPlayers}}</td>
+					<td>{{objectShow.availableSlots}}</td>
+					<td>{{objectShow.price}}</td>
+					<td>{{objectShow.startTime}}</td>
+					<td>{{objectShow.endTime}}</td>
+					<td>
+						<a    ng-click="toggle('edit', objectShow.matchId,objectShow.status)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
+						<a   ng-click="comfirmDelete(objectShow.matchId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+<!-- Modal -->
+<div  class="modal fade bs-example-modal-sm delete-field-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" >
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel2">Thông báo</h4>
+			</div>
+			<div class="modal-body">
+				<h4>Bạn có chắc muốn xóa thông tin này?</h4>
+				<input type="text" hidden="true" name="fieldId" >
+				</div>
+				<div class="modal-header" style="overflow: auto">
+					<div style="float: right">
+						<button type="button" class="btn btn-sm btn-danger btn-delete-disease" ng-click="deleteObject(idDelete)">Delete</button>
+						<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="myModal" class="modal fade add-city-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+
+					<h4 class="modal-title">{{form_title}}</h4>
+				</div>
+				
+				<!-- Map -->
+				<div ng-controller="ModalDemoCtrl">
+				        <script type="text/ng-template" id="myModalContent.html">
+				            <div class="modal-header">
+				                <h3 class="modal-title">Pick geo location</h3>
+				            </div>
+				            <div class="modal-body">
+				                <map ng-if="render" center="[{{geopos.lat}}, {{geopos.lng}}]" zoom-control="true" zoom="8"  on-click="click()"> </map>
+				                <div>{{validation_text}}</div>
+				            </div>
+				            <div class="modal-footer">
+				                <div>Latitude:{{geopos.lat}} Longitude:{{geopos.lng}}</div>
+				                <button class="btn btn-primary" ng-click="ok()">OK</button>
+				            </div>
+				        </script>
+				    
+				        <button class="btn btn-default" ng-click="open('lg')">Pick Geo Location</button>
+				        <div>Latitude:{{geopos.lat}} Longitude:{{geopos.lng}}</div>
+				    
+				    </div>
+				<!-- !Map-->
+
+				<div class="modal-body">
+					<div class="x_content">
+						<form id ="formAU" name="form_a_u" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+							<div class="item form-group">
+								
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  name="matchId" hidden="true"  type="text" ng-model="object.mathchId">
+								</div>
+							</div>
+							<div class="item form-group">
+					  			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">District 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="form-control col-md-7 col-xs-12" id="field" ng-change="setFieldByDistrict()" ng-model="selectedDistrict"  ng-disabled="ngDisabledForm">
+					  					<option ng-repeat="district in districts" value="{{district.districtId}}">{{district.districtName}}</option>
+					  				</select>
+								</div>
+							</div>
+							<div class="item form-group">
+					  			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Field 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="form-control col-md-7 col-xs-12" id="field" ng-model="valueField"  ng-disabled="ngDisabledForm" ng-change="setPositionField()">
+					  					<option ng-repeat="field in fields " value="{{field.fieldId}}">{{field.fieldName}}
+					  					</option>
+					  				</select>
+								</div>
+							</div>
+							<div class="item form-group" ng-show="showHostInput">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Host
+								<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="username"  type="text" ng-model="object.hostName"  disabled="disabled">
+								</div>
+							</div>
+							
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Maximum Players
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="number" ng-model="object.maxPlayers" ng-disabled="ngDisabledForm">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Price
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="price"  type="number" ng-model="object.price" ng-disabled="ngDisabledForm">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Start Time
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="text" ng-model="object.startTime" ng-disabled="ngDisabledForm" >
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">End Time
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									  <input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="text" ng-model="object.endTime" ng-disabled="ngDisabledForm">
+								</div>
+							</div>
+							<div class="ln_solid"></div>
+							<div class="form-group" ng-hide="ngDisabledForm">
+								<div class="col-md-6 col-md-offset-3" >
+									<button ng-disabled="form_a_u.$invalid" id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Submit</button>
+									<a ng-click="btnCancel()" class="btn btn-default btn-cancel">Hủy</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+			
