@@ -16,6 +16,7 @@ angular.
       $scope.showAlertSuccess=false;
       $scope.showAlertFail=false;
       $scope.latlng = [16.055656,108.196791];
+                
       $scope.toggle = function(modalstate, id) {
             $scope.modalstate = modalstate;
 
@@ -39,6 +40,7 @@ angular.
                             $scope.valueDistrict=$scope.districts[0].districtId.toString(); 
                         });
                         $scope.latlng = [ $scope.object.latitude, $scope.object.longitude];
+
                           break;
                     case 'edit':
                           $scope.form_title = "Field Infomation";
@@ -50,7 +52,7 @@ angular.
                           .success(function(response) {
                                 $scope.object = response;
                                 $scope.valueDistrict=$scope.object.districtId.toString();
-                                 $scope.latlng = [ $scope.object.latitude, $scope.object.longitude];        
+                                 $scope.latlng = [ $scope.object.latitude, $scope.object.longitude];       
                           });
                           break;
                     default:
@@ -62,12 +64,13 @@ angular.
           
 
       };
-      
+
       $scope.getpos = function(event){
             $scope.latlng = [event.latLng.lat(), event.latLng.lng()];
             $scope.object.latitude=$scope.latlng[0]; 
             $scope.object.longitude=$scope.latlng[1];
       };
+      
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
             var url = API_URL + "/fields";
