@@ -27,7 +27,9 @@ angular.
                           }
                           $http.get(API_URL+"/cities").then(function(response) {
                              $scope.cities = response.data;
-                             $scope.valueCity=$scope.cities[0].id.toString();  
+                             if($scope.cities.length>0){
+                                    $scope.valueCity=$scope.cities[0].id.toString();  
+                              }
                         });
                           
                           break;
@@ -67,7 +69,7 @@ angular.
                    },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                  $scope.result(response.data);   
+                  $scope.result(response);   
              }).error(function(response) {
              });
 
@@ -83,7 +85,7 @@ angular.
       }
       $scope.deleteObject=function(id){
             $http.delete(API_URL + "/districts/"+id).then(function(response) {
-                  $scope.result(response.data);   
+                  $scope.result(response);   
             });
       };
 
@@ -93,8 +95,8 @@ angular.
                    $scope.showAlertFail=false;
                   
               }else{
-                   $scope.showAlertSuccess=false;
-                   $scope.showAlertFail=true;
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
               }
             $scope.resetData(); 
             $scope.btnCancel();   

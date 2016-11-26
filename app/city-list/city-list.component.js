@@ -55,7 +55,7 @@ angular.
                    },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                  $scope.result(response.data);   
+                  $scope.result(response);   
              }).error(function(response) {
              });
 
@@ -71,7 +71,7 @@ angular.
       }
       $scope.deleteObject=function(id){
             $http.delete(API_URL + "/cities/"+id).then(function(response) {
-                  $scope.result(response.data);   
+                  $scope.result(response);   
             });
       };
 
@@ -81,8 +81,8 @@ angular.
                    $scope.showAlertFail=false;
                   
               }else{
-                   $scope.showAlertSuccess=false;
-                   $scope.showAlertFail=true;
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
               }
             $scope.resetData(); 
             $scope.btnCancel();   

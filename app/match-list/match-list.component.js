@@ -137,7 +137,7 @@ angular.
                     },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                    $scope.result(response.data);   
+                    $scope.result(response);   
              }).error(function(response) {
                    alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
                     console.log(response);
@@ -155,7 +155,7 @@ angular.
       }
       $scope.deleteObject=function(id){
             $http.delete(API_URL + "/matches/"+id).then(function(response) {
-                  $scope.result(response.data);   
+                  $scope.result(response);   
                   
             });
       };
@@ -166,8 +166,8 @@ angular.
                    $scope.showAlertFail=false;
                   
               }else{
-                   $scope.showAlertSuccess=false;
-                   $scope.showAlertFail=true;
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
               }
             $scope.resetData(); 
             $scope.btnCancel();   

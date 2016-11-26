@@ -13,6 +13,7 @@ angular.
       });
        $http.get(API_URL+"/districts").then(function(response) {
              $scope.districts = response.data;
+              $scope.valueDistrict=$scope.districts[0].districtId.toString();
       });
         $scope.isAdmin=true; 
        $scope.valueDistrict="1";
@@ -28,9 +29,9 @@ angular.
                           $scope.form_title = "Add User";
                           $scope.object={
                                 userId : "",
-                                username: "Ex: minhhuyho",
+                                username: "",
                                 password : "",
-                                email:"Ex: minhhuyho@gmail.com",
+                                email:"",
                                 phoneNumber: "",
                                 status:"",
                                 districtId:"",
@@ -98,7 +99,7 @@ angular.
                     },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                    $scope.result(response.data);   
+                    $scope.result(response);   
              }).error(function(response) {
                    alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
                     console.log(response);
@@ -116,41 +117,19 @@ angular.
       }
       $scope.deleteObject=function(id){
             $http.delete(API_URL + "/users/"+id).then(function(response) {
-                  $scope.result(response.data);   
+                  $scope.result(response);   
                   
             });
       };
-      /* $scope.isExitUsername=function(){
-          if (modalstate === 'edit') {
-                  if($scope.object.username!=$scope.usernameOld){
-                        $http.get(API_URL+ '/users/' + $scope.object.username)
-                        .success(function(response) {
-                              $scope.rsExit = response.data;
-                              if( $scope.rsExi.status ){
-                                    $scope.exitUser=true;
-                              }else{
-                                   $scope.exitUser=false;
-                              }
-                        });  
-            }else  if (modalstate === 'add') {
-                  $http.get(API_URL+ '/users/' + $scope.object.username)
-                  .success(function(response) {
-                        $scope.rsExit = response;
-                        if( $scope.rsExi ){
-                              $scope.exitUser=true;
-                        }else{
-                             $scope.exitUser=false;
-                        }     
-                  };
-      };*/
+     
       $scope.result=function(result){
               if(result["status"]==="success"){
                    $scope.showAlertSuccess=true;
                    $scope.showAlertFail=false;
                   
               }else{
-                   $scope.showAlertSuccess=false;
-                   $scope.showAlertFail=true;
+                   $scope.showAlertSuccess=true;
+                   $scope.showAlertFail=false;
               }
             $scope.resetData(); 
             $scope.btnCancel();   
@@ -160,7 +139,6 @@ angular.
           $('.modal').modal('hide');         
       }
     }
-
     ]
 
   });
