@@ -17,6 +17,9 @@ angular.
            when('/matches', {
           template: '<match-list></match-list>'
         }).
+           when('/districts', {
+          template: '<district-list></district-list>'
+        }).
         otherwise('/fields');
     }
   ]);

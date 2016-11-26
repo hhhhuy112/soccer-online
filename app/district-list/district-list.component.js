@@ -1,14 +1,14 @@
 // Register `phoneList` component, along with its associated controller and template
 angular.
-  module('cityList').
-  component('cityList', {
-    templateUrl: 'city-list/city-list.template.html',
+  module('districtList').
+  component('districtList', {
+    templateUrl: 'district-list/district-list.template.html',
         
     controller: ['$http','$routeParams','$scope',
-      function CityListController($http,$routeParams,$scope) {
+      function DistrictListController($http,$routeParams,$scope) {
       var self = this;
        var API_URL="http://soccernetworkapi-humiki.rhcloud.com"
-      $http.get(API_URL+"/cities").then(function(response) {
+      $http.get(API_URL+"/districts").then(function(response) {
             $scope.objects = response.data;
       });
       $scope.showAlertSuccess=false;
@@ -17,19 +17,30 @@ angular.
             $scope.modalstate = modalstate;
             switch (modalstate) {
                     case 'add':
-                          $scope.form_title = "Add City";
+                          $scope.form_title = "Add District";
                           $scope.object={
-                                id : "",
-                                cityCode : "",
-                                cityName : "",
+                                    districtId : "",
+                                    districtCode : "",
+                                    districtName : "",
+                                    cityId : "",
+                                    cityName : "",
                           }
+                          $http.get(API_URL+"/cities").then(function(response) {
+                             $scope.cities = response.data;
+                             $scope.valueCity=$scope.cities[0].id.toString();  
+                        });
+                          
                           break;
                     case 'edit':
-                          $scope.form_title = "City Infomation";
+                          $scope.form_title = "District Infomation";
                           $scope.id = id;
-                          $http.get(API_URL+ '/cities/' + id)
+                           $http.get(API_URL+"/cities").then(function(response) {
+                             $scope.cities = response.data;
+                        });
+                          $http.get(API_URL+ '/districts/' + id)
                           .success(function(response) {
                                 $scope.object = response;
+                                $scope.valueCity=$scope.object.cityId.toString();
                           });
                           break;
                     default:
@@ -40,7 +51,7 @@ angular.
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
              
-             var url = API_URL + "/cities";
+             var url = API_URL + "/districts";
             var method="POST";
             if (modalstate === 'edit') {
                   method="PUT";
@@ -49,9 +60,10 @@ angular.
                    url: url,
                     method: method,
                     data: { 
-                      "id": id,
-                      "cityCode" :  $scope.object.cityCode, 
-                      "cityName" : $scope.object.cityName
+                      "districtId": id,
+                      "districtCode" :  $scope.object.districtCode, 
+                      "districtName" : $scope.object.districtName,
+                      "cityId":$scope.valueCity
                    },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
@@ -62,7 +74,7 @@ angular.
       }
      
       $scope.resetData=function(id){
-          $http.get(API_URL+"/cities").then(function(response) {
+          $http.get(API_URL+"/districts").then(function(response) {
               $scope.objects = response.data;
           });
       }
@@ -70,7 +82,7 @@ angular.
           $scope.idDelete=id;
       }
       $scope.deleteObject=function(id){
-            $http.delete(API_URL + "/cities/"+id).then(function(response) {
+            $http.delete(API_URL + "/districts/"+id).then(function(response) {
                   $scope.result(response);   
             });
       };

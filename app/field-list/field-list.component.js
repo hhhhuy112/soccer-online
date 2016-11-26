@@ -12,7 +12,7 @@ angular.
             $scope.objects = response.data;
       });
       
-    
+      $scope.districts =[];
       $scope.showAlertSuccess=false;
       $scope.showAlertFail=false;
        $scope.toggle = function(modalstate, id) {
@@ -34,8 +34,8 @@ angular.
                           }
                         $http.get(API_URL+"/districts").then(function(response) {
                              $scope.districts = response.data;
+                            $scope.valueDistrict=$scope.districts[0].districtId.toString(); 
                         });
-                          $scope.valueDistrict=$scope.districts[0].districtId.toString();  
                           break;
                     case 'edit':
                           $scope.form_title = "Field Infomation";

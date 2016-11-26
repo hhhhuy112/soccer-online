@@ -5,14 +5,13 @@
 	<strong>Fail!</strong> 
 </div>
 <div class="col-sm-12 col-md-12 col-lg-12 page-title" style="margin-bottom: 50px">
-	<h3>Manage Field</h3>
+	<h3>Manage District</h3>
 </div>
-
 <!-- end page-title-->
 <div class="x_panel col-sm-12 col-md-12 col-lg-12">
 	<div class="x_title">
-		<a class="btn btn-success btn-sm"  ng-click="toggle('add',0)" data-toggle="modal" data-target=".add-city-modal">
-			<i class="fa fa-plus"></i>Add Field
+		<a class="btn btn-success btn-sm"  ng-click="toggle('add',0)" data-toggle="modal" data-target=".add-district-modal">
+			<i class="fa fa-plus"></i> Add  District
 		</a>
 		<div class="clearfix"></div>
 	</div>
@@ -21,24 +20,22 @@
 		<table datatable="ng" id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
 			<thead>
 				<tr>
-					<th>Field Id</th>
-					<th>Field name</th>
-					<th>District</th>
-					<th>Address</th>
-					<th>Phone</th>
+					<th>District Id</th>
+					<th>District Code</th>
+					<th>District Name</th>
+					<th>City Name</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody >
 				<tr  ng-repeat="objectShow in objects ">
-					<td>{{objectShow.fieldId }}</td>
-					<td>{{objectShow.fieldName}}</td>
+					<td>{{objectShow.districtId }}</td>
+					<td>{{objectShow.districtCode}}</td>
 					<td>{{objectShow.districtName}}</td>
-					<td>{{objectShow.address}}</td>
-					<td>{{objectShow.phoneNumber}}</td>
+					<td>{{objectShow.cityName}}</td>
 					<td>
-						<a    ng-click="toggle('edit', objectShow.fieldId )" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
-						<a   ng-click="comfirmDelete(objectShow.fieldId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+						<a    ng-click="toggle('edit', objectShow.districtId)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-district-modal">Xem</a>
+						<a   ng-click="comfirmDelete(objectShow.districtId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
 					</td>
 				</tr>
 			</tbody>
@@ -66,7 +63,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="myModal" class="modal fade add-city-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div id="myModal" class="modal fade add-district-modal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -77,57 +74,45 @@
 				</div>
 				<div class="modal-body">
 					<div class="x_content">
-						<form  id ="formAU" name="form_a_u"  class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
+						<form id="form-add-user" name="form_a_u" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
 							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Field Name
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">District Code
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="fieldName"  type="text" ng-model="object.fieldName" ng-required="true">
-									<input  name="fieldId" hidden="true"  type="text" ng-model="object.fieldId">
+									<input class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="districtCode"  type="text" ng-model="object.districtCode" ng-required="true">
+									<input  name="districtId" hidden="true"  type="text" ng-model="object.districtId">
 								</div>
 								<span class="help-inline"
-									ng-show="form_a_u.fieldName.$invalid && form_a_u.fieldName.$touched">FieldName field is invalid
-								</span>
-
+									ng-show="form_a_u.districtCode.$invalid && form_a_u.districtCode.$touched">District Code field is required  
+								</span>	
 							</div>
 							<div class="item form-group">
-					  			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">District 
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">District Name
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control col-md-7 col-xs-12" id="district"  ng-model="valueDistrict">
-					  					<option ng-repeat="district in districts" value="{{district.districtId}}">{{district.districtName}}</option>
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="districtName"  type="text" ng-model="object.districtName" ng-required="true">
+								</div>
+								<span class="help-inline"
+									ng-show="form_a_u.districtName.$invalid && form_a_u.districtName.$touched">District Name field is required  
+								</span>
+							</div>
+							<div class="item form-group">
+					  			<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">City 
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<select class="form-control col-md-7 col-xs-12" id="cities" ng-change="changeValueCity()" ng-model="valueCity">
+					  					<option ng-repeat="city in cities" value="{{city.id}}">{{city.cityName}}</option>
 					  				</select>
 								</div>
 							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Address
-										<span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="address"  type="text" ng-model="object.address" ng-required="true">
-								</div>
-								<span class="help-inline"
-									ng-show="form_a_u.address.$invalid && form_a_u.address.$touched">Address field is invalid
-								</span>
-							</div>
-							<div class="item form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Phone
-										<span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="phone"  type="text" ng-model="object.phoneNumber" ng-required="true" ng-pattern="/^[0-9]{1,12}$/">
-								</div>
-								<span class="help-inline"
-									ng-show="form_a_u.phone.$invalid && form_a_u.phone.$touched">Phone number field is invalid
-								</span>
-								<span class="help-inline" ng-show="form_a_u.phoneNumber.$error.pattern">Not a valid number!</span>
-							</div>
+							
 							<div class="ln_solid"></div>
 							<div class="form-group">
 								<div class="col-md-6 col-md-offset-3">
-									<button ng-disabled="form_a_u.$invalid" id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Submit</button>
+									<button ng-disabled="form_a_u.$invalid"  id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Add</button>
 									<a ng-click="btnCancel()" class="btn btn-default btn-cancel">Hủy</a>
 								</div>
 							</div>
@@ -139,3 +124,4 @@
 		</div>
 	</div>
 			
+					
