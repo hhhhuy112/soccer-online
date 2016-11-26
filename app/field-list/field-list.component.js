@@ -15,7 +15,8 @@ angular.
       $scope.districts =[];
       $scope.showAlertSuccess=false;
       $scope.showAlertFail=false;
-       $scope.toggle = function(modalstate, id) {
+      $scope.latlng = [16.055656,108.196791];
+      $scope.toggle = function(modalstate, id) {
             $scope.modalstate = modalstate;
 
             switch (modalstate) {
@@ -27,15 +28,17 @@ angular.
                                 districtId : "",
                                 districtName : "",
                                 address : "Ex: 56 Nguyen Chanh",
-                                latitude : 120120,
-                                longtude : 102102,
+                                latitude : 16.055656,
+                                longitude : 108.196791,
                                 phoneNumber: "",
                                 districtName: "",
                           }
+
                         $http.get(API_URL+"/districts").then(function(response) {
                              $scope.districts = response.data;
                             $scope.valueDistrict=$scope.districts[0].districtId.toString(); 
                         });
+                        $scope.latlng = [ $scope.object.latitude, $scope.object.longitude];
                           break;
                     case 'edit':
                           $scope.form_title = "Field Infomation";
@@ -47,6 +50,7 @@ angular.
                           .success(function(response) {
                                 $scope.object = response;
                                 $scope.valueDistrict=$scope.object.districtId.toString();
+                                 $scope.latlng = [ $scope.object.latitude, $scope.object.longitude];        
                           });
                           break;
                     default:
@@ -59,6 +63,11 @@ angular.
 
       };
       
+      $scope.getpos = function(event){
+            $scope.latlng = [event.latLng.lat(), event.latLng.lng()];
+            $scope.object.latitude=$scope.latlng[0]; 
+            $scope.object.longitude=$scope.latlng[1];
+      };
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
             var url = API_URL + "/fields";
@@ -80,7 +89,7 @@ angular.
                     },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                    $scope.result(response);   
+                    $scope.result(response.data);   
              }).error(function(response) {
                    alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
                     console.log(response);
@@ -98,7 +107,7 @@ angular.
       }
       $scope.deleteObject=function(id){
             $http.delete(API_URL + "/fields/"+id).then(function(response) {
-                  $scope.result(response);   
+                  $scope.result(response.data);   
                   
             });
       };

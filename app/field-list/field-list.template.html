@@ -37,8 +37,8 @@
 					<td>{{objectShow.address}}</td>
 					<td>{{objectShow.phoneNumber}}</td>
 					<td>
-						<a    ng-click="toggle('edit', objectShow.fieldId )" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
-						<a   ng-click="comfirmDelete(objectShow.fieldId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+						<a    ng-click="toggle('edit', objectShow.fieldId )" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Detail</a>
+						<a   ng-click="comfirmDelete(objectShow.fieldId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Delete</a>
 					</td>
 				</tr>
 			</tbody>
@@ -75,6 +75,11 @@
 					</button>
 					<h4 class="modal-title">{{form_title}}</h4>
 				</div>
+				<ng-map center="16.055656,108.196791" zoom="15" on-click="getpos($event)">
+				      <marker position="{{latlng}}" title="Hello World!" on-dragend="getpos($event)" 
+				        animation="Animation.BOUNCE" animation="DROP" draggable="true"></marker>
+				</ng-map>
+				{{latlng}}
 				<div class="modal-body">
 					<div class="x_content">
 						<form  id ="formAU" name="form_a_u"  class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
@@ -123,6 +128,22 @@
 									ng-show="form_a_u.phone.$invalid && form_a_u.phone.$touched">Phone number field is invalid
 								</span>
 								<span class="help-inline" ng-show="form_a_u.phoneNumber.$error.pattern">Not a valid number!</span>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Latitude
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="latitude"  type="text" ng-model="object.latitude" readonly="readonly">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="fieldName">Longitude
+										<span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="longitude"  type="text" ng-model="object.longitude" readonly="readonly">
+								</div>
 							</div>
 							<div class="ln_solid"></div>
 							<div class="form-group">

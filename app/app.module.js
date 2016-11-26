@@ -7,6 +7,7 @@ angular.module('soccerApp', [
   'matchList',
   'fieldList',
   'districtList',
-'datatables',	  
+'datatables',
+'ngMap',	  
 
 ]);

@@ -18,6 +18,8 @@ angular.
        $scope.valueDistrict="1";
        $scope.showAlertSuccess=false;
       $scope.showAlertFail=false;
+      $scope.usernameOld="";
+      $scope.exitUser="false";
        $scope.toggle = function(modalstate, id) {
             $scope.modalstate = modalstate;
 
@@ -48,6 +50,7 @@ angular.
                           $http.get(API_URL+ '/users/' + id)
                           .success(function(response) {
                                 $scope.object = response;
+                                $scope.usernameOld=$scope.object.username;
                                 $scope.valueDistrict=$scope.object.districtId.toString();
                                 if($scope.object.userType==1){
                                       $scope.isAdmin=true;          
@@ -62,7 +65,6 @@ angular.
            
       }
       $scope.changeValueDistrict=function(){
-            ;
 
       };
         $scope.setAdmin= function() {
@@ -96,7 +98,7 @@ angular.
                     },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                    $scope.result(response);   
+                    $scope.result(response.data);   
              }).error(function(response) {
                    alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
                     console.log(response);
@@ -114,19 +116,41 @@ angular.
       }
       $scope.deleteObject=function(id){
             $http.delete(API_URL + "/users/"+id).then(function(response) {
-                  $scope.result(response);   
+                  $scope.result(response.data);   
                   
             });
       };
-
+      /* $scope.isExitUsername=function(){
+          if (modalstate === 'edit') {
+                  if($scope.object.username!=$scope.usernameOld){
+                        $http.get(API_URL+ '/users/' + $scope.object.username)
+                        .success(function(response) {
+                              $scope.rsExit = response.data;
+                              if( $scope.rsExi.status ){
+                                    $scope.exitUser=true;
+                              }else{
+                                   $scope.exitUser=false;
+                              }
+                        });  
+            }else  if (modalstate === 'add') {
+                  $http.get(API_URL+ '/users/' + $scope.object.username)
+                  .success(function(response) {
+                        $scope.rsExit = response;
+                        if( $scope.rsExi ){
+                              $scope.exitUser=true;
+                        }else{
+                             $scope.exitUser=false;
+                        }     
+                  };
+      };*/
       $scope.result=function(result){
               if(result["status"]==="success"){
                    $scope.showAlertSuccess=true;
                    $scope.showAlertFail=false;
                   
               }else{
-                   $scope.showAlertSuccess=true;
-                   $scope.showAlertFail=false;
+                   $scope.showAlertSuccess=false;
+                   $scope.showAlertFail=true;
               }
             $scope.resetData(); 
             $scope.btnCancel();   

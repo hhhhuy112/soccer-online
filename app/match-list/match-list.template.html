@@ -12,12 +12,6 @@
 
 <!-- end page-title-->
 <div class="x_panel col-sm-12 col-md-12 col-lg-12">
-	<div class="x_title">
-		<a class="btn btn-success btn-sm"  ng-click="toggle('add',0,0)" data-toggle="modal" data-target=".add-city-modal">
-			<i class="fa fa-plus"></i> Add Match
-		</a>
-		<div class="clearfix"></div>
-	</div>
 	<!-- end x_title-->
 	<div class="x_content ">
 		<table datatable="ng" id="datatable" cellspacing="0" width="100%" class="table display nowrap table-striped table-bordered">
@@ -45,8 +39,8 @@
 					<td>{{objectShow.startTime}}</td>
 					<td>{{objectShow.endTime}}</td>
 					<td>
-						<a    ng-click="toggle('edit', objectShow.matchId,objectShow.status)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal">Xem</a>
-						<a   ng-click="comfirmDelete(objectShow.matchId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Xóa</a>
+						<a    ng-click="toggle('edit', objectShow.matchId,objectShow.status)" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".add-city-modal" style="margin-bottom:10px; ">Detail</a>
+						<a   ng-click="comfirmDelete(objectShow.matchId)" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Delete</a>
 					</td>
 				</tr>
 			</tbody>
@@ -85,30 +79,12 @@
 
 					<h4 class="modal-title">{{form_title}}</h4>
 				</div>
-				
-				<!-- Map -->
-				<div ng-controller="ModalDemoCtrl">
-				        <script type="text/ng-template" id="myModalContent.html">
-				            <div class="modal-header">
-				                <h3 class="modal-title">Pick geo location</h3>
-				            </div>
-				            <div class="modal-body">
-				                <map ng-if="render" center="[{{geopos.lat}}, {{geopos.lng}}]" zoom-control="true" zoom="8"  on-click="click()"> </map>
-				                <div>{{validation_text}}</div>
-				            </div>
-				            <div class="modal-footer">
-				                <div>Latitude:{{geopos.lat}} Longitude:{{geopos.lng}}</div>
-				                <button class="btn btn-primary" ng-click="ok()">OK</button>
-				            </div>
-				        </script>
-				    
-				        <button class="btn btn-default" ng-click="open('lg')">Pick Geo Location</button>
-				        <div>Latitude:{{geopos.lat}} Longitude:{{geopos.lng}}</div>
-				    
-				    </div>
-				<!-- !Map-->
-
-				<div class="modal-body">
+				<ng-map center="16.055656,108.196791" zoom="15" on-click="getpos($event)">
+				      <marker position="{{latlng}}" title="Hello World!" on-dragend="getpos($event)" 
+				        animation="Animation.BOUNCE" animation="DROP" draggable="true"></marker>
+				</ng-map>
+				{{latlng}}
+s				<div class="modal-body">
 					<div class="x_content">
 						<form id ="formAU" name="form_a_u" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
 							<div class="item form-group">
@@ -122,7 +98,7 @@
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control col-md-7 col-xs-12" id="field" ng-change="setFieldByDistrict()" ng-model="selectedDistrict"  ng-disabled="ngDisabledForm">
+									<select class="form-control col-md-7 col-xs-12" id="field" ng-change="setFieldByDistrict()" ng-model="selectedDistrict" disabled="disabled" >
 					  					<option ng-repeat="district in districts" value="{{district.districtId}}">{{district.districtName}}</option>
 					  				</select>
 								</div>
@@ -132,7 +108,7 @@
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<select class="form-control col-md-7 col-xs-12" id="field" ng-model="valueField"  ng-disabled="ngDisabledForm" ng-change="setPositionField()">
+									<select class="form-control col-md-7 col-xs-12" id="field" ng-model="valueField"  ng-change="setPositionField()" disabled="disabled">
 					  					<option ng-repeat="field in fields " value="{{field.fieldId}}">{{field.fieldName}}
 					  					</option>
 					  				</select>
@@ -143,7 +119,7 @@
 								<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="username"  type="text" ng-model="object.hostName"  disabled="disabled">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="username"  type="text" ng-model="object.hostName"  disabled="disabled" >
 								</div>
 							</div>
 							
@@ -152,7 +128,7 @@
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="number" ng-model="object.maxPlayers" ng-disabled="ngDisabledForm">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="number" ng-model="object.maxPlayers"  disabled="disabled">
 								</div>
 							</div>
 							<div class="item form-group">
@@ -160,7 +136,7 @@
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="price"  type="number" ng-model="object.price" ng-disabled="ngDisabledForm">
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="price"  type="number" ng-model="object.price"  disabled="disabled" >
 								</div>
 							</div>
 							<div class="item form-group">
@@ -168,7 +144,7 @@
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="text" ng-model="object.startTime" ng-disabled="ngDisabledForm" >
+									<input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="text" ng-model="object.startTime"  disabled="disabled">
 								</div>
 							</div>
 							<div class="item form-group">
@@ -176,17 +152,19 @@
 										<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									  <input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="text" ng-model="object.endTime" ng-disabled="ngDisabledForm">
+									  <input  class="form-control col-md-7 col-xs-12" data-validate-length-range="6" name="maximumPlayers"  type="text" ng-model="object.endTime"  disabled="disabled">
 								</div>
 							</div>
 							<div class="ln_solid"></div>
-							<div class="form-group" ng-hide="ngDisabledForm">
-								<div class="col-md-6 col-md-offset-3" >
-									<button ng-disabled="form_a_u.$invalid" id="addUser" ng-click="saveRecord(modalstate, id)" class="btn btn-success">Submit</button>
-									<a ng-click="btnCancel()" class="btn btn-default btn-cancel">Hủy</a>
-								</div>
-							</div>
+							<ul class="list-group" >
+    							<li class="list-group-item"  ng-repeat="feedback in feedbacks ">
+	    							<div class="well">{{feedback.feedback}}</div>
+	    							<p>Poster: <strong>{{feedback.username}}</strong></p>
+	    							<p >Posted at <span>{{feedback.createDate}}</span></p>	
+    							</li>
+  						</ul>
 						</form>
+						
 					</div>
 				</div>
 				<div class="clearfix"></div>

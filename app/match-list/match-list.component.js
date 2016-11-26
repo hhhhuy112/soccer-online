@@ -15,7 +15,7 @@ angular.
        $scope.valueField="1";
        $scope.showAlertSuccess=false;
       $scope.showAlertFail=false;
-      $scope.mapGG=$("#mapGoogle");
+      $scope.latlng = [16.055656,108.196791];
        $scope.toggle = function(modalstate, id,status) {
             $scope.modalstate = modalstate;
 
@@ -47,10 +47,12 @@ angular.
 
                                 $http.get(API_URL+ '/fields/district/' + parseInt($scope.selectedDistrict))
                                 .success(function(response) {
-                                      $scope.fields = response;
-                                      $scope.latitude=response[0].latitude;
-                                      $scope.longitude=response[0].longitude; 
-                                      $scope.object.fieldId=response[0].fieldId;
+                                      $scope.fields = response.data;
+                                      if($scope.fields.length>0){
+                                          $scope.latitude=$scope.fields[0].latitude;
+                                          $scope.longitude=$scope.fields[0].longitude; 
+                                          $scope.object.fieldId=$scope.fields[0].fieldId;
+                                      }
                                 });
                                
                           break;
@@ -79,9 +81,11 @@ angular.
                                 .success(function(response) {
                                       $scope.field = response;
                                       $scope.selectedDistrict=$scope.field.districtId.toString();
-                                      $scope.latitude=$scope.field.latitude;
-                                      $scope.longitude=$scope.field.longitude;
-                                       alert($scope.latitude+" "+$scope.longitude);    
+                                       $scope.latlng = [$scope.field.latitude,$scope.field.longitude];
+                                });
+                                $http.get(API_URL+ '/feedbacks/' + id)
+                                .success(function(response) {
+                                      $scope.feedbacks = response;
                                 });
                                 $scope.valueField=$scope.object.fieldId.toString();
                           });
@@ -103,14 +107,14 @@ angular.
                    $http.get(API_URL+ '/fields/' + $scope.object.fieldId)
                                 .success(function(response) {
                                       $scope.field = response;
-                                      $scope.latitude=$scope.field.latitude;
-                                      $scope.longitude=$scope.field.longitude;                       
-                                      alert($scope.latitude+" "+$scope.longitude); 
+                                                      
 
                     });        
 
       }
-        
+      $scope.getpos = function(event){
+            $scope.latlng = [event.latLng.lat(), event.latLng.lng()];
+      };
        //Lưu record mới / update record
        $scope.saveRecord = function(modalstate, id) {
             var url = API_URL + "/matches";
@@ -133,7 +137,7 @@ angular.
                     },
                     headers: {"Content-Type": "application/json"}
              }).success(function(response) {
-                    $scope.result(response);   
+                    $scope.result(response.data);   
              }).error(function(response) {
                    alert('Đã xảy ra lỗi. Vui lòng kiểm tra log để biết chi tiết');
                     console.log(response);
@@ -151,7 +155,7 @@ angular.
       }
       $scope.deleteObject=function(id){
             $http.delete(API_URL + "/matches/"+id).then(function(response) {
-                  $scope.result(response);   
+                  $scope.result(response.data);   
                   
             });
       };
